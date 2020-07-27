@@ -10,5 +10,12 @@ This project was established to create an interactive interface for the user to 
 1 code file (.py) is used to create the interactive experience and to provide the requested statistics.
 
 ### Credits
-It's important to give proper credit. Add links to any repo that inspired you or blogposts you consulted.
+This repository was forked from udacity/pdsnd_github. Many thanks go to Richard Kalehoff for the lesson material and instruction videos on git and GitHub.
+Similarly many thanks to everyone at Udacity for the course material and the mentor help on Knowledge.
 
+### Built with
+Anaconda for the Python Code
+
+Atom for Code editing
+
+Git Bash as terminal for git
