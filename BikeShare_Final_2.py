@@ -6,90 +6,108 @@ Created on 10/07/2020
 import pandas as pd
 from astropy.units import day
 
-CITY_DATA = { 'chicago': 'chicago.csv',
-              'new york': 'new_york_city.csv',
-              'washington': 'washington.csv' }
+CITY_DATA = { 'C': 'chicago.csv',
+              'N': 'new_york_city.csv',
+              'W': 'washington.csv' }
 
-month_dict = {'jan':'1',
-              'feb':'2',
-              'mar':'3',
-              'apr':'4',
-              'may':'5',
-              'jun':'6',
-              'all':'all'}
+city_dict = {'C':'Chicago',
+             'N':'New York City',
+             'W':'Washington'}
 
-day_dict = {'monday':'0',
-            'tuesday':'1',
-            'wednesday':'2',
-            'thursday':'3',
-            'friday':'4',
-            'saturday':'5',
-            'sunday':'6',
-            'all':'all'}
+month_dict = {'1':'January',
+              '2':'February',
+              '3':'March',
+              '4':'April',
+              '5':'May',
+              '6':'June',
+              'A':'All'}
+
+day_dict = {'0':'Monday',
+            '1':'Tuesday',
+            '2':'Wednesday',
+            '3':'Thursday',
+            '4':'Friday',
+            '5':'Saturday',
+            '6':'Sunday',
+            'A':'All'}
 
 def get_filters():
     """
     Asks user to specify a city, month, and day to analyze.
 
     Returns:
-        (str) city - name of the city to analyze
-        (str) month - name (abbreviated to 3 letetrs) of the month to filter by, or "all" to apply no month filter
-        (str) day - name of the day of week to filter by, or "all" to apply no day filter
+        (str) city - letter of the city to analyze
+        (str) month - number of the month to filter by, or "A' for all to apply no month filter
+        (str) day - number of the day of week to filter by, or "A" for all to apply no day filter
     """
     final_answer_string = 'YN'
     result_fa = 0    
     final_answer = 'N'
     while final_answer != 'Y':
+        print()
         print('Hello! Let\'s explore some US bikeshare data!')
         
         #get user input for city 
-        city_list = ['washington', 'chicago','new york']
-        print(city_list[0],city_list[1],city_list[2])
+        letter_string = 'WCN'
         result_c = 0
         
         while result_c == 0:
-            city = str(input("Which city would you like to analyse? Please enter Chicago, New York or Washington")).lower()
+            city = str(input("Which city would you like to analyse? Please enter C for Chicago, N for New York City or W for Washington")).upper()
             
-            for c in city_list:
-                if c == city:
-                    result_c +=1
-            if result_c == 0:
-                print('Whoops, that doesn\'t look like a city I recognise')        
+            if len(city) <2:
+                for letter in letter_string:
+                    if city[0][0] == letter:
+                        result_c +=1
+                        
+                if result_c != 1:
+                    print('Whoops, that doesn\'t look like a city I recognise')
         
         #get user input for month   
-        month_list = ['jan', 'feb', 'mar','apr','may','jun','all']
+        month_string = '123456A'
         result_m = 0
         
         while result_m == 0:
-            month = str(input('Which month would you like to filter by? Enter Jan, Feb, Mar, Apr, May, Jun or All for all months')).lower()
-
-            for m in month_list:
-                if m == month:
-                    result_m +=1
+            month = str(input('Which month would you like to filter by? Enter 1 for Jan, 2 for Feb, 3 for Mar, 4 for Apr, 5 for May, 6 for Jun or A for all months')).upper()
+            
+            if len(month) <2:
+                for m in month_string:
+                    if month[0][0] == m:
+                        result_m +=1
                         
-            if result_m !=1:
-                print('Whoops, that doesn\'t look like a month I recognise')        
+                if result_m !=1:
+                    print('Whoops, that doesn\'t look like a month I recognise')        
         
         #get user input for day of week
-        day_list = ['monday','tuesday','wednesday','thursday','friday','saturday','sunday','all']
+        day_string = '0123456A'
         result_d = 0
         
         while result_d == 0:
-            day = str(input('Which day would you like to filter by? Enter any day of the week, or enter All for all days')).lower()
+            day = str(input('Which day would you like to filter by? Enter 0 for Mon, 1 for Tue, 2 for Wed, 3 for Thur, 4 for Fri, 5 for Sat, 6 for Sun or A for all days')).upper()
             
-            for d in day_list:
-                if d == day:
-                    result_d +=1
+            if len(day) <2:
+                for d in day_string:
+                    if day[0][0] == d:
+                        result_d +=1
                         
-            if result_d !=1:
-                print('Whoops, that doesn\'t look like a day I recognise')
+                if result_d !=1:
+                    print('Whoops, that doesn\'t look like a day I recognise')
 
         print()
         print('Please confirm your selection as below:')
-        print('City Filter: {}'.format(city).title())
-        print('Month Filter: {}'.format(month).title())
-        print('Day Filter: {}'.format(day).title())
+        
+        for key, value in city_dict.items():
+            if (key == city):
+                print('City Filter: {}'.format(value))
                 
+        for key, value in month_dict.items():
+            if (key == month):
+                print('Month Filter: {}'.format(value))
+    
+        for key, value in day_dict.items():
+            if (key == day):
+                print('Day Filter: {}'.format(value))
+        
+        print()
         result_fa =0
         while result_fa ==0:
             final_answer = str(input('Please enter Y to continue with this selection, or N to start again.')).upper()
@@ -101,7 +119,6 @@ def get_filters():
                         
                 if result_fa != 1:
                     print('Whoops, that doesn\'t look like input I recognise.')
-                    
     return [city,month,day]
 
 
