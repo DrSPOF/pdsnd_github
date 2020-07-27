@@ -127,22 +127,16 @@ def load_data(my_list):
     Loads data for the specified city and filters by month and day if applicable.
 
     Args:
-        (str) city - name of the city to analyze
-        (str) month - name (abbreviated to 3 letters)  of the month to filter by, or "all" to apply no month filter
-        (str) day - name of the day of week to filter by, or "all" to apply no day filter
+        (str) city - letter of the city to analyze
+        (str) month - number of the month to filter by, or "A' for all to apply no month filter
+        (str) day - number of the day of week to filter by, or "A" for all to apply no day filter
     Returns:
         Statistical output and snapshot of raw data if requested.
     """
     city = my_list[0]
+    month = my_list[1]
+    day = my_list[2]
     
-    for key, value in month_dict.items():
-            if (key == my_list[1]):
-                month = (value)
-
-    for key, value in day_dict.items():
-            if (key == my_list[2]):
-                day = (value)
-                
     # load the datafile
     for key, value in CITY_DATA.items():
             if (key == city):
@@ -158,28 +152,29 @@ def load_data(my_list):
     df['start_end_station'] = df['Start Station'] + '_' + df['End Station']
 
     #filter by month
-    if month != 'all':
+    if month != 'A':
         months = ['1','2','3','4','5','6']
         month = months.index(month) + 1
         df = df[df['month'] == month]
 
     # filter by day
-    if day != 'all':
+    if day != 'A':
         days = ['0','1','2','3','4','5','6']
         day = days.index(day)
         df = df[df['day_of_week'] == day]
     
     print()
     print('Please find your results below')
+    print('-'*60)
     print()
     
     #only execute if month selection is All
-    if month =='all':
+    if month =='A':
         popular_month = df['month'].mode()[0]
         print('Most popular month: ',popular_month) 
 
     #only execute of day selection is All
-    if day == 'all':
+    if day == 'A':
         popular_day = df['day_of_week'].mode()[0]
         print('Most popular day: ',popular_day)                  
 
@@ -202,21 +197,25 @@ def load_data(my_list):
     print()
     print('User Type: ',user_types)
     print()
-    if city != 'washington':
+    if city != 'W':
         gender = df['Gender'].value_counts()
         print('Gender: ',gender)
         print()
+        
 
     #get user input for raw data
     x = (0)
     y = (5)
-    
+    print('-'*60)
+    print()
     row = 'Y'
     while x == 0:
-        row = str(input('Would you like to see 5 rows of raw data? PLease enter Y for Yes, or N for No to exit')).upper()
+        row = str(input('Would you like to see 5 rows of raw data? Please enter Y for Yes, or N for No to exit')).upper()
             
         if row == 'Y':
             print(df.iloc[x:y])
+            print('-'*60)
+            print()
                 
             while row =='Y':
                 row_again = str(input('Would you like to see 5 more rows of data? Please enter Y for Yes or N for No to exit')).upper()
@@ -225,6 +224,7 @@ def load_data(my_list):
                     x +=5
                     y +=5
                     print(df.iloc[x:y])
+                    print('-'*60)
                         
                 if row_again == 'N':
                     print()
