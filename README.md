@@ -19,3 +19,13 @@ Anaconda for the Python Code
 Atom for Code editing
 
 Git Bash as terminal for git
+
+### Known bugs - still requires a fix
+There is a known bug in the .py code. 
+Use case:
+In def load_data(), the final question to request whether the user would like to see 5 ros of data. If the sequence to answer these questions is:
+Yes followed by No, the output is:
+"Goodbye!
+Would you like to see 5 rows of raw data? PLease enter Y for Yes, or N to exit"
+
+The while loop needs to be reviewed to resolve this problem and end the loop after "Goodbye!"
